@@ -27,21 +27,25 @@ func main() {
 		xbmcaddr     = flag.String("target", "", "xbmc/kodi ip (raspbmc address, ip or hostname)")
 		username     = flag.String("login", "", "jsonrpc login (configured in xbmc settings)")
 		password     = flag.String("password", "", "jsonrpc password (configured in xbmc settings)")
-		viassh       = flag.Bool("ssh", false, "use SSH Tunnelling (need ssh user and password)")
-		nossh        = flag.Bool("nossh", false, "force to not use SSH tunnel - usefull to override configuration file")
-		port         = flag.Int("port", 8080, "local port (ignored if you use ssh option)")
-		sshuser      = flag.String("sshuser", "pi", "ssh login")
-		sshpassword  = flag.String("sshpass", "", "ssh password")
-		sshport      = flag.Int("sshport", 22, "target ssh port")
-		version      = flag.Bool("version", false, fmt.Sprintf("Print the current version (%s)", VERSION))
+		viassh       = flag.Bool("ssh", false, "Use SSH Tunnelling (need ssh user and password)")
+		nossh        = flag.Bool("nossh", false, "Force to not use SSH tunnel - usefull to override configuration file")
+		port         = flag.Int("port", 8080, "Local port (ignored if you use ssh option)")
+		sshuser      = flag.String("sshuser", "pi", "SSH login")
+		sshpassword  = flag.String("sshpass", "", "SSH password")
+		sshport      = flag.Int("sshport", 22, "Target SSH port")
+		version      = flag.Bool("version", false, "Print the current version")
 		xbmcport     = flag.Int("targetport", 80, "XBMC/Kodi jsonrpc port")
-		stdin        = flag.Bool("stdin", false, "read file from stdin to stream")
-		confexample  = flag.Bool("conf-example", false, "print a configuration file example to STDOUT")
-		disablecheck = flag.Bool("disable-check-release", false, "disable release check")
-		checknew     = flag.Bool("check-release", false, "check for new release")
+		stdin        = flag.Bool("stdin", false, "Read file from stdin to stream")
+		confexample  = flag.Bool("conf-example", false, "Print a configuration file example to STDOUT")
+		disablecheck = flag.Bool("disable-check-release", false, "Disable release check")
+		checknew     = flag.Bool("check-release", false, "Check for new release")
+		help        = flag.Bool("help", false, "Print this help")
 	)
 
-	flag.Usage = utils.Usage
+
+	flag.BoolVar(help, "h", false, "Print this help")
+
+	flag.Usage = utils.BriefUsage
 
 	flag.Parse()
 
@@ -50,6 +54,11 @@ func main() {
 		fmt.Println(VERSION)
 		fmt.Println("Compiled for", runtime.GOOS, runtime.GOARCH)
 		os.Exit(0)
+	}
+
+	if *help {
+		utils.Usage()
+		os.Exit(1)
 	}
 
 	// If user asks to prints configuration file example, print it and exit
@@ -109,7 +118,7 @@ func main() {
 
 	if conf.Target == "" {
 		fmt.Println("\033[33mYou must provide the XBMC server address\033[0m")
-		flag.Usage()
+		fmt.Println("Use option -help or -h for information about usage")
 		os.Exit(1)
 	}
 
@@ -121,7 +130,7 @@ func main() {
 	if !*stdin {
 		if len(flag.Args()) < 1 {
 			fmt.Println("\033[33mYou must provide a file to serve\033[0m")
-			flag.Usage()
+			fmt.Println("Use option -help or -h for information about usage")
 			os.Exit(2)
 		}
 

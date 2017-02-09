@@ -9,11 +9,11 @@ import (
 // Usage() prints command line documentation
 func Usage() {
 	fmt.Fprintf(os.Stderr, "\nUsage: ")
-	fmt.Fprintf(os.Stderr, "%s [options] mediafile|youtubeurl|streamurl\n\n", os.Args[0])
+	fmt.Fprintf(os.Stderr, "idok [options] mediafile|youtubeurl|streamurl\n\n")
 	fmt.Fprintf(os.Stderr, "Opening external URL dosen't open local or remote port. Your media center will fetch data itself.\n\n")
-	fmt.Fprintf(os.Stderr, "You may be able to stream stdout -> stdin:")
-	fmt.Fprintf(os.Stderr, "\n\t%s [options] -stdin < file\n", os.Args[0])
-	fmt.Fprintf(os.Stderr, "Or:\n\tcommand | %s [options] -stdin \n\n", os.Args[0])
+	fmt.Fprintf(os.Stderr, "You may be able to stream stdout -> stdin:\n")
+	fmt.Fprintf(os.Stderr, "\n\t idok [options] -stdin < file\n")
+	fmt.Fprintf(os.Stderr, "Or:\n\tcommand | idok [options] -stdin \n\n")
 	fmt.Fprintf(os.Stderr, "Using ssh option is only managed for local files.\n")
 	fmt.Fprintf(os.Stderr, "Default mode is HTTP mode, it opens :8080 port on your host and send message to Kodi to read from that port. So, you must configure your firewall to open that port. You can override used port with -port option.\n")
 	fmt.Fprintf(os.Stderr, "You can use SSH with -ssh option, %s will try to use key pair authtification, then use -sshpass to try login/password auth. With -ssh, you should change -sshuser if your Kodi user is not \"pi\" (default on raspbmc)\n", os.Args[0])
@@ -31,4 +31,10 @@ Configuration file will set default options. Using options in the command line w
 The -conf-example option prints a default configuration file.
 `)
 	fmt.Fprintf(os.Stderr, "\n")
+}
+
+func BriefUsage() {
+	fmt.Fprintf(os.Stderr, "\nUsage: ")
+	fmt.Fprintf(os.Stderr, "idok [options] mediafile|youtubeurl|streamurl\n\n")
+	fmt.Println("Use option -help or -h for detailed information about usage")
 }
