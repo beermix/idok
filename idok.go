@@ -108,7 +108,7 @@ func main() {
 	}
 
 	if conf.Target == "" {
-		fmt.Println("\033[33mYou must provide the xbmc server address\033[0m")
+		fmt.Println("\033[33mYou must provide the XBMC server address\033[0m")
 		flag.Usage()
 		os.Exit(1)
 	}
